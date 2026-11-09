@@ -44,6 +44,24 @@ void groupByKey(struct intermediateInput *input, struct output *output, int *res
   output[*resultCount].doubledValue = input->doubledValue;
   resultCount = resultCount + 1;
 }
+
+void reduce(struct output output) {
+
+  printf("(%d, [", output.doubledValue);
+
+  for (int i = 0; i < output.count; i++) {
+
+    if (i > 0) {
+
+      printf(" , ");
+    }
+
+    printf("%d", output.lineNumbers[i]);
+  }
+
+  printf(" ])\n");
+}
+
 int main() {
 
   struct intermediateInput intermediate[maxInputs];
@@ -73,6 +91,11 @@ int main() {
   for (int i = 0; i < valuesEntered; i++) {
 
     groupByKey(&intermediate[i], outputs, &resultCount);
+  }
+
+  // reduce part
+  for (int i = 0; i < resultCount; i++) {
+    reduce(outputs[i]);
   }
 
   return 0;
